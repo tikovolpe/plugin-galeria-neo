@@ -465,10 +465,10 @@ class Widget_Galeria_Neo extends \Elementor\Widget_Base {
                     $alt           = $thumbnail_id
                         ? esc_attr( get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true ) )
                         : esc_attr( $post->post_title );
-                    $logo_url      = esc_url( get_post_meta( $post->ID, '_logo_url', true ) );
+                    $logo_url      = get_post_meta( $post->ID, '_logo_url', true );
                     ?>
                     <div class="gn-galeria-item">
-                        <?php if ( $logo_url ) : ?><a href="<?php echo $logo_url; ?>" target="_blank" rel="noopener noreferrer">
+                        <?php if ( $logo_url ) : ?><a href="<?php echo esc_url( $logo_url ); ?>" target="_blank" rel="noopener noreferrer">
                         <?php endif; ?>
                         <?php if ( $thumbnail_id ) : ?>
                             <?php echo wp_get_attachment_image( $thumbnail_id, 'large', false, [ 'alt' => $alt ] ); ?>
