@@ -124,14 +124,11 @@ class Widget_Galeria_Neo extends \Elementor\Widget_Base {
         ] );
 
         $this->add_responsive_control( 'carousel_columns', [
-            'label'     => 'Colunas visíveis',
-            'type'      => \Elementor\Controls_Manager::NUMBER,
-            'min'       => 1,
-            'max'       => 3,
-            'default'   => 1,
-            'selectors' => [
-                '{{WRAPPER}} .galeria-neo-wrapper' => '--gn-carousel-cols: {{VALUE}}',
-            ],
+            'label'   => 'Colunas visíveis',
+            'type'    => \Elementor\Controls_Manager::NUMBER,
+            'min'     => 1,
+            'max'     => 3,
+            'default' => 1,
         ] );
 
         $this->add_control( 'carousel_autoplay', [
@@ -423,7 +420,7 @@ class Widget_Galeria_Neo extends \Elementor\Widget_Base {
         $gap_size     = isset( $settings['gap']['size'] ) ? absint( $settings['gap']['size'] ) : 16;
         $gap_unit     = $settings['gap']['unit'] ?? 'px';
 
-        $css = $selector . '{--gn-cols:' . $cols_desktop_grid . ' !important;--gn-gap:' . $gap_size . $gap_unit . ' !important;}';
+        $css = $selector . '{--gn-cols:' . $cols_desktop_grid . ' !important;--gn-gap:' . $gap_size . $gap_unit . ' !important;--gn-carousel-cols:' . $cols_desktop . ' !important;}';
 
         if ( class_exists( '\Elementor\Plugin' ) && \Elementor\Plugin::$instance->breakpoints ) {
             $active_bps = \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints();
@@ -435,14 +432,25 @@ class Widget_Galeria_Neo extends \Elementor\Widget_Base {
             usort( $ordered_css, static fn( $a, $b ) => $b['value'] <=> $a['value'] );
 
             foreach ( $ordered_css as $bp ) {
-                $key      = $bp['key'];
-                $raw_grid = $settings[ 'columns_' . $key ] ?? '';
-                if ( $raw_grid === '' ) continue;
-                $cols_bp  = max( 1, absint( $raw_grid ) );
-                $media    = $bp['direction'] === 'min'
+                $key          = $bp['key'];
+                $raw_grid     = $settings[ 'columns_' . $key ] ?? '';
+                $raw_carousel = $settings[ 'carousel_columns_' . $key ] ?? '';
+
+                if ( $raw_grid === '' && $raw_carousel === '' ) continue;
+
+                $media = $bp['direction'] === 'min'
                     ? '@media(min-width:' . $bp['value'] . 'px)'
                     : '@media(max-width:' . $bp['value'] . 'px)';
-                $css     .= $media . '{' . $selector . '{--gn-cols:' . $cols_bp . ' !important;}}';
+
+                $vars = [];
+                if ( $raw_grid !== '' ) {
+                    $vars[] = '--gn-cols:' . max( 1, absint( $raw_grid ) ) . ' !important';
+                }
+                if ( $raw_carousel !== '' ) {
+                    $vars[] = '--gn-carousel-cols:' . max( 1, min( 3, absint( $raw_carousel ) ) ) . ' !important';
+                }
+
+                $css .= $media . '{' . $selector . '{' . implode( ';', $vars ) . ';}}';
             }
         }
 

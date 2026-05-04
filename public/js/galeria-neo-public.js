@@ -269,7 +269,8 @@
             this.wrapper.classList.remove( 'gn-mode-grid', 'gn-mode-carousel' );
             this.wrapper.classList.add( 'gn-mode-' + mode );
 
-            if ( mode === 'carousel' && this._getItemCount() > 1 ) {
+            const pageCount = Math.ceil( this._getItemCount() / cols );
+            if ( mode === 'carousel' && pageCount > 1 ) {
                 if ( ! this.carousel || this._currentCols !== cols ) {
                     if ( this.carousel ) {
                         this.carousel.destroy();
