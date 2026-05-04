@@ -1,3 +1,18 @@
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/ce82e1b3-738f-41ae-b57a-7defc0f74ccc" alt="Galeria Neo Banner" width="100%">
+
+  <br>
+
+  [![GitHub release](https://img.shields.io/github/v/release/tikovolpe/plugin-galeria-neo?style=for-the-badge&color=3670FF&logo=github)](https://github.com/tikovolpe/plugin-galeria-neo/releases)
+  [![GitHub stars](https://img.shields.io/github/stars/tikovolpe/plugin-galeria-neo?style=for-the-badge&color=FFD700)](https://github.com/tikovolpe/plugin-galeria-neo/stargazers)
+  [![GitHub issues](https://img.shields.io/github/issues/tikovolpe/plugin-galeria-neo?style=for-the-badge&color=critical)](https://github.com/tikovolpe/plugin-galeria-neo/issues)
+
+  <br>
+
+</div>
+
+---
+
 # Galeria Neo
 
 Plugin WordPress para exibir galerias de logos de associados e parceiros como widget Elementor, com suporte a grid responsivo, carrossel automático e efeitos hover.
