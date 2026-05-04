@@ -1,0 +1,146 @@
+/* ── Wrapper ─────────────────────────────────────────────────────────── */
+.galeria-neo-wrapper {
+    --gn-cols: 3;
+    --gn-gap: 16px;
+    --gn-carousel-cols: 1;
+    --gn-ratio: auto;
+    --gn-fit: cover;
+    --gn-radius: 0px;
+    --gn-shadow: none;
+    --gn-border-width: 0px;
+    --gn-border-color: transparent;
+    --gn-border-style: solid;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.galeria-neo-wrapper *, 
+.galeria-neo-wrapper *::before, 
+.galeria-neo-wrapper *::after {
+    box-sizing: border-box;
+}
+
+.galeria-neo-wrapper .galeria-neo-empty {
+    padding: 20px;
+    text-align: center;
+    color: #666666;
+    border: 1px dashed #cccccc;
+}
+
+/* ── Layout: Grid ────────────────────────────────────────────────────── */
+.galeria-neo-wrapper.gn-mode-grid .gn-galeria-track {
+    display: grid !important;
+    grid-template-columns: repeat(var(--gn-cols, 3), 1fr) !important;
+    gap: var(--gn-gap, 16px) !important;
+}
+
+/* ── Layout: Carousel ────────────────────────────────────────────────── */
+.galeria-neo-wrapper.gn-mode-carousel .gn-galeria-track {
+    display: flex !important;
+    gap: 0 !important;
+    transition: transform 0.5s ease;
+    will-change: transform;
+}
+
+.galeria-neo-wrapper.gn-mode-carousel .gn-galeria-item {
+    flex: 0 0 calc(100% / var(--gn-carousel-cols, 1)) !important;
+    max-width: calc(100% / var(--gn-carousel-cols, 1)) !important;
+}
+
+/* ── Item ────────────────────────────────────────────────────────────── */
+.galeria-neo-wrapper .gn-galeria-item {
+    position: relative;
+    overflow: hidden;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--gn-radius);
+    box-shadow: var(--gn-shadow);
+    border: var(--gn-border-width) var(--gn-border-style) var(--gn-border-color);
+    background: #ffffff !important; /* Force white background as requested */
+}
+
+.galeria-neo-wrapper .gn-galeria-item a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: inherit;
+    align-items: inherit;
+    text-decoration: none;
+}
+
+.galeria-neo-wrapper .gn-galeria-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--gn-ratio);
+    object-fit: var(--gn-fit);
+    transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+}
+
+/* ── Hover: zoom ─────────────────────────────────────────────────────── */
+.galeria-neo-wrapper.gn-hover-zoom .gn-galeria-item:hover img {
+    transform: scale(var(--gn-zoom-scale, 1.08));
+}
+
+/* ── Hover: opacity ──────────────────────────────────────────────────── */
+.galeria-neo-wrapper.gn-hover-opacity .gn-galeria-item:hover img {
+    opacity: var(--gn-opacity-value, 0.6);
+}
+
+/* ── Hover: grayscale → cor ──────────────────────────────────────────── */
+.galeria-neo-wrapper.gn-hover-grayscale .gn-galeria-item img {
+    filter: grayscale(100%);
+}
+.galeria-neo-wrapper.gn-hover-grayscale .gn-galeria-item:hover img {
+    filter: grayscale(0%);
+}
+
+/* ── Hover: overlay ──────────────────────────────────────────────────── */
+.galeria-neo-wrapper.gn-hover-overlay .gn-galeria-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gn-overlay-color, rgba(0, 0, 0, 0.4));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    border-radius: var(--gn-radius);
+}
+.galeria-neo-wrapper.gn-hover-overlay .gn-galeria-item:hover::after {
+    opacity: 1;
+}
+
+/* ── Dots ────────────────────────────────────────────────────────────── */
+.galeria-neo-wrapper .gn-galeria-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 0;
+    list-style: none;
+}
+
+.galeria-neo-wrapper .gn-galeria-dot {
+    width: var(--gn-galeria-dot-size, 10px);
+    height: var(--gn-galeria-dot-size, 10px);
+    border-radius: 50%;
+    background: var(--gn-galeria-dot-color, #cccccc);
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    transition: background 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.galeria-neo-wrapper .gn-galeria-dot.gn-galeria-dot-active {
+    background: var(--gn-galeria-dot-active-color, #333333);
+    transform: scale(1.2);
+}
+
+/* ── Hide dots on grid mode ──────────────────────────────────────────── */
+.galeria-neo-wrapper.gn-mode-grid .gn-galeria-dots {
+    display: none;
+}

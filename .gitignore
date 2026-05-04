@@ -1,0 +1,11 @@
+BUGS/*
+autoresearch-results.tsv
+plugin-galeria-neo-main/*
+
+# Zone.Identifier (Windows metadata)
+*:Zone.Identifier
+*.zip
+.claude/
+.codex
+.codex
+CLAUDE.md
