@@ -103,6 +103,9 @@ class Galeria_Neo_CPT {
     }
 
     public function save_meta( int $post_id ): void {
+        if ( wp_is_post_revision( $post_id ) ) {
+            return;
+        }
         // Quick edit passes its own nonce; meta box uses a different one.
         $is_quick_edit = isset( $_POST['_inline_edit'] );
         $nonce_value   = $is_quick_edit
