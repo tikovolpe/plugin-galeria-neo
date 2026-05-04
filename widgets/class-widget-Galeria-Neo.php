@@ -98,16 +98,13 @@ class Widget_Galeria_Neo extends \Elementor\Widget_Base {
         ] );
 
         $this->add_responsive_control( 'columns', [
-            'label'   => 'Colunas',
-            'type'    => \Elementor\Controls_Manager::NUMBER,
-            'min'     => 1,
-            'max'     => 10,
-            'default' => 3,
+            'label'          => 'Colunas',
+            'type'           => \Elementor\Controls_Manager::NUMBER,
+            'min'            => 1,
+            'max'            => 10,
+            'default'        => 3,
             'tablet_default' => 2,
             'mobile_default' => 1,
-            'selectors' => [
-                '{{WRAPPER}} .galeria-neo-wrapper' => '--gn-cols: {{VALUE}}',
-            ],
         ] );
 
         $this->add_responsive_control( 'gap', [
@@ -116,7 +113,6 @@ class Widget_Galeria_Neo extends \Elementor\Widget_Base {
             'size_units' => [ 'px' ],
             'range'      => [ 'px' => [ 'min' => 0, 'max' => 80 ] ],
             'default'    => [ 'size' => 16, 'unit' => 'px' ],
-            'selectors'  => [ '{{WRAPPER}} .galeria-neo-wrapper' => '--gn-gap: {{SIZE}}{{UNIT}}' ],
         ] );
 
         $this->end_controls_section();
@@ -419,6 +415,38 @@ class Widget_Galeria_Neo extends \Elementor\Widget_Base {
                 $breakpoints_map[] = [ 'key' => $key, 'value' => $bp['value'], 'direction' => $bp['direction'] ];
             }
         }
+
+        // Output responsive CSS variables directly — bypasses Elementor CSS compilation issues.
+        $el_id        = $this->get_id();
+        $selector     = '.elementor-element-' . esc_attr( $el_id ) . ' .galeria-neo-wrapper';
+        $cols_desktop_grid = max( 1, absint( $settings['columns'] ?? 3 ) );
+        $gap_size     = isset( $settings['gap']['size'] ) ? absint( $settings['gap']['size'] ) : 16;
+        $gap_unit     = $settings['gap']['unit'] ?? 'px';
+
+        $css = $selector . '{--gn-cols:' . $cols_desktop_grid . ' !important;--gn-gap:' . $gap_size . $gap_unit . ' !important;}';
+
+        if ( class_exists( '\Elementor\Plugin' ) && \Elementor\Plugin::$instance->breakpoints ) {
+            $active_bps = \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints();
+            $ordered_css = [];
+            foreach ( $active_bps as $key => $bp ) {
+                $direction   = method_exists( $bp, 'get_direction' ) ? $bp->get_direction() : 'max';
+                $ordered_css[] = [ 'key' => $key, 'value' => (int) $bp->get_value(), 'direction' => $direction ];
+            }
+            usort( $ordered_css, static fn( $a, $b ) => $b['value'] <=> $a['value'] );
+
+            foreach ( $ordered_css as $bp ) {
+                $key      = $bp['key'];
+                $raw_grid = $settings[ 'columns_' . $key ] ?? '';
+                if ( $raw_grid === '' ) continue;
+                $cols_bp  = max( 1, absint( $raw_grid ) );
+                $media    = $bp['direction'] === 'min'
+                    ? '@media(min-width:' . $bp['value'] . 'px)'
+                    : '@media(max-width:' . $bp['value'] . 'px)';
+                $css     .= $media . '{' . $selector . '{--gn-cols:' . $cols_bp . ' !important;}}';
+            }
+        }
+
+        echo '<style>' . $css . '</style>';
 
         $wrapper_attrs = array_merge( [
             'class'            => 'galeria-neo-wrapper gn-mode-' . esc_attr( $mode_desktop ) . ' gn-hover-' . esc_attr( $hover_effect ),
