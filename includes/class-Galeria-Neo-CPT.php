@@ -193,7 +193,7 @@ class Galeria_Neo_CPT {
             return;
         }
 
-        $current = $_GET[ $this->get_filter_key() ] ?? '';
+        $current = sanitize_text_field( wp_unslash( $_GET[ $this->get_filter_key() ] ?? '' ) );
         $terms   = get_terms( [ 'taxonomy' => self::TAXONOMY, 'hide_empty' => false ] );
 
         echo '<select name="' . esc_attr( $this->get_filter_key() ) . '">';
