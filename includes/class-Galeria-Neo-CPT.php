@@ -87,7 +87,6 @@ class Galeria_Neo_CPT {
 
     public function render_meta_box( \WP_Post $post ): void {
         wp_nonce_field( 'galeria_neo_save_logo_url', 'galeria_neo_logo_url_nonce' );
-        $value = esc_url( get_post_meta( $post->ID, '_logo_url', true ) );
         ?>
         <p>
             <label for="galeria_neo_logo_url_field">URL do site do parceiro/associado:</label><br>
@@ -95,7 +94,7 @@ class Galeria_Neo_CPT {
                 type="url"
                 id="galeria_neo_logo_url_field"
                 name="_logo_url"
-                value="<?php echo $value; ?>"
+                value="<?php echo esc_attr( get_post_meta( $post->ID, '_logo_url', true ) ); ?>"
                 style="width:100%"
                 placeholder="https://exemplo.com.br"
             >
