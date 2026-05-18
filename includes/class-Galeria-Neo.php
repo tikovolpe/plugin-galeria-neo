@@ -22,7 +22,7 @@ final class Galeria_Neo {
     }
 
     private function define_constants(): void {
-        define( 'GALERIA_NEO_VERSION',      '1.0.0' );
+        define( 'GALERIA_NEO_VERSION',      '1.0.2' );
         define( 'GALERIA_NEO_PLUGIN_DIR',   plugin_dir_path( dirname( __FILE__ ) ) );
         define( 'GALERIA_NEO_PLUGIN_URL',   plugin_dir_url( dirname( __FILE__ ) ) );
         define( 'GALERIA_NEO_GITHUB_OWNER', 'tikovolpe' );

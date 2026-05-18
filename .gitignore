@@ -1,11 +1,29 @@
-BUGS/*
-autoresearch-results.tsv
+# Build / dist
+*.zip
 plugin-galeria-neo-main/*
 
-# Zone.Identifier (Windows metadata)
+# Windows WSL metadata
 *:Zone.Identifier
-*.zip
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Dependencies (se algum dia usar)
+node_modules/
+vendor/
+
+# Claude / dev tooling
 .claude/
 .codex
-.codex
 CLAUDE.md
+
+# Segurança / auditorias internas
+SECURITY-AUDIT*.md
+BUGS/*
+
+# Artefatos de pesquisa/automação
+autoresearch-results.tsv
+docs/*
