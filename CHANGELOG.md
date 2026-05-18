@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.3] - 2026-05-18
+
+### Fixed
+
+- Carrossel iOS/WebKit: `offsetWidth` retornando 0 no init → init adiado via `requestAnimationFrame` quando layout ainda não pintado
+- Carrossel iOS/WebKit: `_goTo()` agora usa `getBoundingClientRect().width` (mais confiável que `offsetWidth` no WebKit) com fallback para `offsetWidth`
+- Carrossel iOS Safari/Chrome: adicionado `cursor: pointer` no wrapper em modo carrossel — obrigatório para `touchstart`/`touchend` dispararem em `div` não-interativo no WebKit
+
 ## [1.0.2] - 2026-05-18
 
 ### Fixed

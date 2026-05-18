@@ -18,6 +18,14 @@
 
             if ( this.total < 2 ) return;
 
+            if ( this.wrapper.offsetWidth === 0 ) {
+                requestAnimationFrame( () => this._init() );
+            } else {
+                this._init();
+            }
+        }
+
+        _init() {
             this._goTo( 0, false );
             this._bindDots();
             this._bindTouch();
@@ -59,7 +67,8 @@
             this.track.style.transitionDuration = animate ? this.speed + 'ms' : '0ms';
 
             // +1 accounts for prepended clone page; px avoids track-width % ambiguity
-            const offset = ( pageIndex + 1 ) * this.wrapper.offsetWidth;
+            const width  = this.wrapper.getBoundingClientRect().width || this.wrapper.offsetWidth;
+            const offset = ( pageIndex + 1 ) * width;
             this.track.style.transform = 'translateX(-' + offset + 'px)';
 
             if ( animate ) {

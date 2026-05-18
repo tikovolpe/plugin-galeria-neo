@@ -37,6 +37,10 @@
 }
 
 /* ── Layout: Carousel ────────────────────────────────────────────────── */
+.galeria-neo-wrapper.gn-mode-carousel {
+    cursor: pointer; /* required for touch events on iOS Safari/WebKit */
+}
+
 .galeria-neo-wrapper.gn-mode-carousel .gn-galeria-track {
     display: flex !important;
     gap: 0 !important;
