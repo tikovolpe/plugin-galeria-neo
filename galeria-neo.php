@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * Plugin Name:       Galeria Neo
  * Plugin URI:        https://github.com/tikovolpe/plugin-galeria-neo
  * Description:       Widget Elementor de galeria de imagens com grid e carrossel responsivos, ordenação e efeitos hover.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            LVBA Comunicação
